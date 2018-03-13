@@ -8,19 +8,25 @@ def get_character_movies_from_api(character)
   character_hash = JSON.parse(all_characters)
   characters = character_hash["results"]
   filmInfo = []
-    #When key == "name"
-  characters.each do |hash|#array
 
-      if hash["name"] == character
-
-          hash["films"].each do |url|
-            film = RestClient.get(url)
-            filmHash = JSON.parse(film)
-            filmInfo << filmHash
-          end
-
-        end
+  hashFound = characters.find do |hash|
+    hash["name"] == character
+  end["films"].each do  |url|
+    film = RestClient.get(url)
+    filmHash = JSON.parse(film)
+    filmInfo << filmHash
   end
+  # characters.each do |hash|#array
+  #     if hash["name"] == character
+  #
+  #         hash["films"].each do |url|
+  #           film = RestClient.get(url)
+  #           filmHash = JSON.parse(film)
+  #           filmInfo << filmHash
+  #         end
+  #
+  #     end
+  # end
   filmInfo
     #Check to see if it's == to character
     # if characters["name"] == character
@@ -46,7 +52,7 @@ def parse_character_movies(films_hash)
     puts "Title: " + film["title"]
     puts "Director: " + film["director"]
     puts "Producer: " + film["producer"]
-    puts "Release Date: " + film["release_date"] 
+    puts "Release Date: " + film["release_date"]
   end
 end
 
